@@ -1,0 +1,51 @@
+// Week 4 
+
+ db.students.ensure({student_id: -1})
+ db.system.indexes.find()
+ db.students.getIndexes() // specific collection
+ db.students.dropIndex({student_id: -1})
+ db.foo.find({'a:1'}).explain()
+ 
+ db.students.ensureIndex({'addresses.tag'}:1)
+ db.students.ensureIndex({'addresses.tag'}:1, {unique:true}) 
+ db.students.ensureIndex({'addresses.tag'}:1, {unique:true, dropDups: true}) 
+ 
+ dropDups: true // if you want to delete duplicates
+ 
+ /* if i want to create an index where one of the keys does not exist on 
+    the collection, then create a Sparse index 
+ */
+  db.students.ensureIndex({'addresses.tag'}:1, {unique:true, sparse: true}) 
+
+  
+  // if I want to order i can use .hint({size:1})
+  
+  db.students.find().sort({size: 1}).hint({size:1})
+
+
+ // 4.3
+ // postsCollection.find(query).sort(new BasicDBObject().append("date", -1)).limit(10);
+
+  db.posts.find({tags:'crab'}).sort(date:-1).limit(10)
+
+ // Geospatial indexes 
+
+ location: [x,y]
+ ensureIndex({location:'2d', type:1 })
+
+ db.collection.find({location:{$near: [x,y]}})
+
+db.stores.find({loc: {$near:{$geometry:{type:"Point",coordinates:[-130,39]}, $maxDistance: 1000000}}}})
+
+// Text search in MongoDB
+
+ db.collection.ensureIndex({words:'text'})
+
+ db.collection.find({$text:{$search:'dog bar}'})
+
+
+
+ 
+  
+ 
+  

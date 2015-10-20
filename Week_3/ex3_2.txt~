@@ -1,0 +1,22 @@
+-- match   = where 
+-- project = select 
+-- unwind  = pivot an array  
+-- group   = group by clause
+-- match   = having clause 
+-- sort    = order 
+-- limit   = top 
+
+select _id, min(score) 
+from students 
+where type = 'homework'
+group by _id
+
+db.students.aggregate(
+  { $group: 
+    {
+     _id: "$_id", 
+     minimum : {$min: "$score"}
+    }
+  }
+)
+

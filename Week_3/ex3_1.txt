@@ -1,0 +1,1 @@
+db.students.aggregate(      { $match: {scores: {$elemMatch: {'type': 'homework'}} } },       { $unwind : "$scores" },      { $match: { "scores.type" : "homework" } },      { $group : { _id : "$_id", scores : { $addToSet : "$scores" }}}  )

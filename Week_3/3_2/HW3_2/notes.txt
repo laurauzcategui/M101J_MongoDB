@@ -1,0 +1,24 @@
+db.students.aggregate({"$unwind":"$scores"},{"$match":{"scores.type":"homework"}},{"$sort":{"_id":1,"scores.score":1}},{"$group":{"_id":"$_id","minimum":{"$min":"$scores.score"}}})
+
+
+cur=db.students.aggregate({"$unwind":"$scores"},{"$match":{"scores.type":"homework"}},{"$sort":{"_id":1,"scores.score":1}},{"$group":{"_id":"$_id","minimum":{"$min":"$scores.score"}}})
+
+
+while(cur.hasNext()) { jsonprint(cur.next())}
+
+
+   DBObject query = QueryBuilder.start("scores.type").is("homework")
+                    .and("_id").is(result.get("_id")).and("scores.score").is(result.get("min")).get();
+
+            DBCursor cursor = collection.find(query,
+                    new BasicDBObject("scores", true).append("_id", false));
+
+            try {
+                while (cursor.hasNext()) {
+                    DBObject cur = cursor.next();
+                    System.out.println(cur);
+                }
+            } finally {
+                cursor.close();
+            }
+
